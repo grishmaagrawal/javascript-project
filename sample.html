@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+    <style>
+        table {
+                      border-collapse: collapse;
+                      
+                  }
+                  
+                  table, td, th {
+                      border: 1px solid black;
+                      margin-top: 1%;
+                      margin-left: 2%;
+                                                  
+                  }
+                  td, th {
+                      padding: 20px;
+                      text-align: center;
+                  }
+              </style>
+</head>
+
+
+<body>
+    <ul id="transpotation"></ul>
+    <input type="text" id="new_item" placeholder="create new name.." title="create new name" />
+    <input type="text" id="new_edu" placeholder="create new name.." title="create new name" />
+
+    <button onclick="addToList()" placeholder="create new name..">ADD</button>
+    <input type="text" id="filter_search" onkeyup="myFunction()" placeholder="Search for names.." title="search name">
+    <button onclick="">Search</button>
+    <br />
+    <table id="myTable"></table>
+
+</body>
+<script>
+
+    var vehicleList = [
+        { id: 1, name: 'planes', edu: 'cs' },
+        { id: 2, name: 'Trains', edu: 'cs' },
+        { id: 3, name: 'Bus', edu: 'cs' },
+        { id: 4, name: 'Auto', edu: 'cs' }
+    ];
+    var vehicleListOrignal = vehicleList
+    function init() {
+
+        if (document.getElementById("myTable")) {
+            while (document.getElementById("myTable").rows.length) {
+                document.getElementById("myTable").deleteRow(0)
+            }
+        }
+
+        for (var i = 0; i < vehicleList.length; i++) {
+            var tr = document.createElement('tr');
+
+            var td1 = document.createElement('td');
+            var td2 = document.createElement('td');
+            var td3 = document.createElement('td');
+            var td4 = document.createElement('td');
+
+
+            var text1 = document.createTextNode(vehicleList[i].id)
+            var text2 = document.createTextNode(vehicleList[i].name)
+            var text3 = document.createTextNode(vehicleList[i].edu);
+
+            var inputElement = document.createElement('input');
+            inputElement.type = "button";
+            inputElement.value = "delete";
+            inputElement.addEventListener('click', function () {
+                removeToList(this.parentNode.parentNode.firstElementChild.innerText);
+            });
+
+
+            td1.appendChild(text1);
+            td2.appendChild(text2);
+            td3.appendChild(text3);
+            td4.appendChild(inputElement);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+
+
+            document.getElementById("myTable").appendChild(tr);
+        }
+    }
+    init();
+    function myFunction() {
+        debugger;
+        var searchText = document.getElementById("filter_search").value;
+        searchText = searchText ? searchText : '';
+        vehicleList = vehicleListOrignal.filter((res) => {
+            return res.name.indexOf(searchText) > -1
+        })
+        init();
+    }
+    myFunction();
+    function addToList() {
+        var item = document.getElementById('new_item').value;
+        var new_edu = document.getElementById('new_edu').value;
+
+        if (item, new_edu) {
+            let obj = {
+                id: vehicleList.length + 1,
+                name: item,
+                edu: new_edu
+            }
+            vehicleList.push(obj);
+            init();
+            document.getElementById('new_item').value = '';
+            document.getElementById('new_edu').value = '';
+        }
+    }
+    addToList();
+    function removeToList(id) {
+        var index = vehicleList.findIndex(function (res) { return res.id == id });
+        if (index >= 0) {
+            vehicleList.splice(index, 1)
+            init();
+        }
+    }
+</script>
+
+</html>

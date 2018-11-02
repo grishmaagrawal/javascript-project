@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Document</title>
+  <style>
+    table {
+          border-collapse: collapse;
+      }
+      
+      table, td, th {
+          border: 1px solid black;
+      }
+  </style>
+</head>
+
+<body>
+
+
+  <ul id="transpotation"></ul>
+  <input type="text" id="new_item" />
+
+  <button onclick="addToList()">ADD</button>
+  <button onclick="removeToList(3)">remove</button>
+
+  <br />
+  <table id="myTable"></table>
+</body>
+
+<script>
+
+  var vehicleList = [
+    { id: 1, name: 'planes' },
+    { id: 2, name: 'Trains' },
+    { id: 3, name: 'Bus' },
+    { id: 4, name: 'Auto' }
+  ];
+
+  
+  function init() {
+
+    var list = document.getElementById("transpotation");
+    while (list.firstChild) {
+      list.removeChild(list.firstChild);
+    }
+
+    if (document.getElementById("myTable") && document.getElementById("myTable").rows) {
+      while (document.getElementById("myTable").rows.length) {
+        document.getElementById("myTable").deleteRow(0)
+      }
+    }
+
+    for (var index = 0; index < vehicleList.length; index++) {
+      
+      var newnode = document.createElement("li");
+      var textnode = document.createTextNode(vehicleList[index].name);
+      newnode.appendChild(textnode);
+      document.getElementById("transpotation").appendChild(newnode);
+    }
+
+
+    for (var i = 0; i < vehicleList.length; i++) {
+      var tr = document.createElement('tr');
+
+      var td1 = document.createElement('td');
+      var td2 = document.createElement('td');
+      var td3 = document.createElement('td');
+
+      var text1 = document.createTextNode(vehicleList[i].id)
+      var text2 = document.createTextNode(vehicleList[i].name);
+
+      var inputElement = document.createElement('input');
+      inputElement.type = "button";
+      inputElement.value = "delete";
+      inputElement.addEventListener('click', function () {
+        removeToList(this.parentNode.parentNode.firstElementChild.innerText);
+      });
+
+      td1.appendChild(text1);
+      td2.appendChild(text2);
+      td3.appendChild(inputElement);
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      tr.appendChild(td3);
+      document.getElementById("myTable").appendChild(tr);
+    }
+
+  }
+
+  init();
+
+  function addToList() {
+    var item = document.getElementById('new_item').value;
+
+    if (item) {
+      // var newnode = document.createElement("li");
+      // var textnode = document.createTextNode(item);
+      // newnode.appendChild(textnode);
+      // document.getElementById("transpotation").appendChild(newnode);
+      let obj = {
+        id: vehicleList.length + 1,
+        name: item
+      }
+      vehicleList.push(obj);
+      init();
+      document.getElementById('new_item').value = '';
+    }
+  }
+
+  function removeToList(id) {
+    var index = vehicleList.findIndex(function (res) { return res.id == id });
+    if (index >= 0) {
+      vehicleList.splice(index, 1)
+      init();
+    }
+  }
+
+
+</script>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=func, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text">
+    <p id="username"> this is page</p>
+    <p id="password">this is password</p>
+    <button onclick="validate()" value = "click"> click</button>
+</body>
+
+<script>
+        function validate(){
+            var v1 = document.getElementById("username").value;
+            alert(v1);
+            var v2 = document.getElementById("password").value;
+            alert("v2");
+            if(v1 == "username" && v2 == "password123")
+            {
+                alert("login successfully");
+            }
+            else{
+                alert("sorry");
+            
+            }
+            }
+        
+        validate();
+    </script>
+</html>
